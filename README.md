@@ -21,6 +21,7 @@ A command-line utility for managing AWS EC2 resources, built with Python, Typer,
 
 ```bash
 pip install -r requirements.txt
+
 ```
 
 ## Usage
