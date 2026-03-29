@@ -1,5 +1,4 @@
 import typer
-from typing import Optional
 import boto3
 from botocore.exceptions import ClientError, NoCredentialsError
 from src.errors import format_aws_error, format_credentials_error
