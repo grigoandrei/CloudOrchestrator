@@ -1,5 +1,4 @@
 import typer
-from typer import Exit
 from typing import Optional
 import boto3
 from botocore.exceptions import ClientError, NoCredentialsError
