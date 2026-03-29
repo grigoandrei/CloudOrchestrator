@@ -1,7 +1,9 @@
 import typer
 from typing import Optional
 import boto3
+from botocore.exceptions import ClientError, NoCredentialsError
 from src.models import SecurityGroupInfo
+from src.errors import format_aws_error, format_credentials_error
 
 sg_app = typer.Typer()
 
@@ -31,7 +33,14 @@ def create_security_group(
     }
     if vpc_id:
         params["VpcId"] = vpc_id
-    response = client.create_security_group(**params)
+    try:
+        response = client.create_security_group(**params)
+    except NoCredentialsError:
+        typer.echo(format_credentials_error())
+        raise typer.Exit(1)
+    except ClientError as e:
+        typer.echo(format_aws_error(e, {"group_name": name}))
+        raise typer.Exit(1)
 
     typer.echo(f"Created: {response['GroupId']} ({name})")
 
@@ -57,14 +66,29 @@ def add_ingress_rule(
         "CidrIp": cidr,
     }
 
-    client.authorize_security_group_ingress(**params)
+    try:
+        client.authorize_security_group_ingress(**params)
+    except NoCredentialsError:
+        typer.echo(format_credentials_error())
+        raise typer.Exit(1)
+    except ClientError as e:
+        typer.echo(format_aws_error(e, {"group_id": group_id}))
+        raise typer.Exit(1)
+
     typer.echo(f"Added rule: {protocol} port {from_port}-{to_port} from {cidr} to {group_id}")
 
 
 @sg_app.command("list")
 def list_security_groups() -> None:
     client = boto3.client("ec2")
-    response = client.describe_security_groups()
+    try:
+        response = client.describe_security_groups()
+    except NoCredentialsError:
+        typer.echo(format_credentials_error())
+        raise typer.Exit(1)
+    except ClientError as e:
+        typer.echo(format_aws_error(e))
+        raise typer.Exit(1)
 
     for sg_data in response["SecurityGroups"]:
         sg = _parse_security_group(sg_data)

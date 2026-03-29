@@ -3,6 +3,8 @@ from typing import Optional
 import boto3
 from src.errors import retry_on_throttle
 from src.models import InstanceInfo
+from botocore.exceptions import ClientError, NoCredentialsError
+from src.errors import format_aws_error, format_credentials_error
 
 instances_app = typer.Typer()
 
@@ -45,7 +47,14 @@ def create_instance(
     if security_group_id:
         params["SecurityGroupIds"] = [security_group_id]
 
-    response = client.run_instances(**params)
+    try:
+        response = client.run_instances(**params)
+    except NoCredentialsError:
+        typer.echo(format_credentials_error())
+        raise typer.Exit(1)
+    except ClientError as e:
+        typer.echo(format_aws_error(e,{"ami_id": ami, "region": client.meta.region_name}))
+        raise typer.Exit(1)
 
     if name:
         instance_ids = [inst["InstanceId"] for inst in response["Instances"]]
