@@ -3,11 +3,11 @@ import boto3
 from botocore.exceptions import ClientError, NoCredentialsError
 from src.errors import format_aws_error, format_credentials_error
 from datetime import datetime, timedelta
-from src.models import CpuMetric
+from src.models import CPUMetric
 
 monitor_app = typer.Typer()
 
-def get_average_cpu(instance_id: str, period_hours: int = 24) -> CpuMetric:
+def get_average_cpu(instance_id: str, period_hours: int = 24) -> CPUMetric:
     cw = boto3.client("cloudwatch")
     end_time = datetime.utcnow()
     start_time = end_time - timedelta(hours=period_hours)
@@ -24,12 +24,12 @@ def get_average_cpu(instance_id: str, period_hours: int = 24) -> CpuMetric:
 
     datapoints = response["Datapoints"]
     if not datapoints:
-        return CpuMetric(instance_id, 0.0, 0.0, period_hours, 0)
+        return CPUMetric(instance_id, 0.0, 0.0, period_hours, 0)
 
     avg = sum(dp["Average"] for dp in datapoints) / len(datapoints)
     max_val = max(dp["Maximum"] for dp in datapoints)
 
-    return CpuMetric(instance_id, avg, max_val, period_hours, len(datapoints))
+    return CPUMetric(instance_id, avg, max_val, period_hours, len(datapoints))
 
 
 
