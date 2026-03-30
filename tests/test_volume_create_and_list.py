@@ -1,11 +1,3 @@
-"""
-Unit tests for volume creation and listing.
-
-Validates:
-- Requirement 4.1: create returns a valid volume ID
-- Requirement 4.4: list displays correct attachment status
-"""
-
 import boto3
 import pytest
 from moto import mock_aws

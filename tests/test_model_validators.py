@@ -1,15 +1,3 @@
-"""
-Property tests for data model validators (Property 11).
-
-Validates Requirements 9.1, 9.2, 9.3:
-- Instance ID must match pattern i-[0-9a-f]+
-- Instance state must be one of the six valid states
-- Volume type must be one of: gp3, gp2, io1, st1, sc1
-
-Uses hypothesis to generate arbitrary strings and verify validators
-accept valid inputs and reject invalid ones.
-"""
-
 import re
 import pytest
 from hypothesis import given, assume, settings

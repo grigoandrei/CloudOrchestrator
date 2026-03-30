@@ -1,16 +1,3 @@
-"""
-Property test for idle detection and stop correctness (Property 7).
-
-Validates Requirements 6.3, 6.4:
-- stop-idle identifies all running instances whose average CPU is below the
-  threshold AND that have at least one datapoint.
-- Only those instances are stopped; instances at or above the threshold
-  (or with zero datapoints) remain running.
-
-Uses hypothesis to generate varying CPU levels and thresholds, moto to mock
-EC2, and unittest.mock.patch to control CloudWatch CPU responses.
-"""
-
 import os
 import boto3
 from hypothesis import given, settings, assume

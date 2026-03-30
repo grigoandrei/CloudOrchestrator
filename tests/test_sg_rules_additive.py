@@ -1,13 +1,3 @@
-"""
-Property test for additive security group rules (Property 3).
-
-Validates Requirements 3.3, 3.4:
-- Adding a new ingress rule preserves all existing rules
-- Rules accumulate additively with each addition
-
-Uses hypothesis to generate arbitrary rule sequences and moto to mock EC2.
-"""
-
 import boto3
 from hypothesis import given, settings
 from hypothesis import strategies as st

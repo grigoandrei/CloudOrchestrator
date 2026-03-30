@@ -1,11 +1,3 @@
-"""
-Unit tests for default VPC fallback and CIDR warning (Task 5.3).
-
-Validates:
-- Requirement 3.2: Omitting --vpc-id uses the default VPC
-- Requirement 3.5: CIDR 0.0.0.0/0 triggers a warning message
-"""
-
 import os
 import boto3
 import pytest

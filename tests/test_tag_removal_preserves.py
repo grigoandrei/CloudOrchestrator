@@ -1,13 +1,3 @@
-"""
-Property test for tag removal preserving unrelated tags (Property 6).
-
-Validates Requirements 5.3, 5.4:
-- Removing a subset of tag keys deletes only those keys
-- All other tags remain unchanged after removal
-
-Uses hypothesis to generate arbitrary tag sets and removal subsets, moto to mock EC2.
-"""
-
 import boto3
 from hypothesis import given, settings, assume
 from hypothesis import strategies as st

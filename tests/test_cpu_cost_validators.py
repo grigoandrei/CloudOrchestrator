@@ -1,12 +1,3 @@
-"""
-Property tests for CPU metric range and cost entry validation (Properties 9 & 10).
-
-Property 9: CPU metric range invariant — average_cpu and max_cpu always in [0.0, 100.0]
-Property 10: Cost entry non-negative amounts — amount >= 0.0 and dates match YYYY-MM-DD
-
-Validates: Requirements 6.6, 7.3, 9.4, 9.5
-"""
-
 import re
 from datetime import date
 

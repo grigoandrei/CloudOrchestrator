@@ -1,13 +1,3 @@
-"""
-Property test for tag idempotence (Property 5).
-
-Validates Requirements 5.1, 5.2:
-- Setting tags on a resource applies those tags
-- Calling set_tags multiple times with the same arguments produces identical tags
-
-Uses hypothesis to generate arbitrary tag key-value pairs and moto to mock EC2.
-"""
-
 import boto3
 from hypothesis import given, settings
 from hypothesis import strategies as st

@@ -1,14 +1,3 @@
-"""
-Property test for volume AZ mismatch rejection (Property 4).
-
-Validates Requirement 4.3:
-- If the volume and instance are in different availability zones,
-  the Volume_Manager SHALL reject the attachment and display an error
-  message stating the AZ mismatch.
-
-Uses hypothesis to generate arbitrary AZ pairs and moto to mock EC2.
-"""
-
 import boto3
 import pytest
 from hypothesis import given, settings, assume
