@@ -3,7 +3,7 @@ import time
 import functools
 
 def format_aws_error(error: ClientError, context: dict | None) -> str:
-    code = error["Error"]["Code"]
+    code = error.response["Error"]["Code"]
 
     if code == "InvalidAMIID.NotFound":
         ami_id = context.get("ami_id", "unknown")
