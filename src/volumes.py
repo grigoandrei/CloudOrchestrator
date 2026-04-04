@@ -95,7 +95,7 @@ def list_volumes() -> None:
         typer.echo(format_credentials_error())
         raise typer.Exit(1)
     except ClientError as e:
-        typer.echo(format_aws_error(e))
+        typer.echo(format_aws_error(e, {}))
         raise typer.Exit(1)
 
     for vol_data in response["Volumes"]:

@@ -87,7 +87,7 @@ def list_security_groups() -> None:
         typer.echo(format_credentials_error())
         raise typer.Exit(1)
     except ClientError as e:
-        typer.echo(format_aws_error(e))
+        typer.echo(format_aws_error(e, {}))
         raise typer.Exit(1)
 
     for sg_data in response["SecurityGroups"]:

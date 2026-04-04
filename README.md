@@ -19,16 +19,38 @@ A command-line utility for managing AWS EC2 resources, built with Python, Typer,
 
 ## Installation
 
-```bash
-pip install -r requirements.txt
+The quickest way to get started:
 
+```bash
+git clone <repo-url> && cd CloudOrchestrator
+./install.sh
+source ~/.zshrc  # or ~/.bashrc
+```
+
+The install script will:
+- Verify Python 3.10+ is available
+- Create a virtual environment and install all dependencies
+- Add the `cloud-orch` command to your PATH
+
+If you prefer to set things up manually:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python -m src.main --help
 ```
 
 ## Usage
 
+You can use `cloud-orch` directly if you ran the install script, or `python -m src.main` from the project root.
+
 ```bash
-# Instance operations
-cloud-orch instances create --ami ami-0abcdef1234567890 --instance-type t2.micro --name "my-server"
+# Show all available commands
+cloud-orch --help
+
+# Use a specific AWS region or profile
+cloud-orch --region us-west-2 --profile dev instances list
 cloud-orch instances list --state running
 cloud-orch instances terminate i-0123456789abcdef0
 
@@ -72,11 +94,11 @@ src/
 ## Testing
 
 ```bash
-# Run unit tests (uses moto for AWS mocking)
-pytest
+# Run all tests
+python -m pytest tests/ -v
 
-# Run property-based tests
-pytest tests/ -k "property"
+# Run just the property-based tests
+python -m pytest tests/ -k "test_" -v
 ```
 
 ## Dependencies
